@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.wordpress.anujsaxenadev.file_manager"
+    namespace = "com.wordpress.anujsaxenadev.network_manager"
     compileSdk = 34
 
     defaultConfig {
@@ -34,6 +34,7 @@ android {
 }
 
 dependencies {
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.google.dagger:hilt-android:2.48.1")
     ksp("com.google.dagger:hilt-compiler:2.48")
 }
