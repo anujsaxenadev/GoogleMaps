@@ -2,10 +2,9 @@ package com.wordpress.anujsaxenadev.file_manager.impl
 
 import android.content.Context
 import com.wordpress.anujsaxenadev.file_manager.FileManager
+import com.wordpress.anujsaxenadev.file_manager.runCatchingWithDispatcher
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -17,6 +16,10 @@ import javax.inject.Singleton
 class InternalStorageFileManager @Inject constructor(
     @ApplicationContext private val context: Context
 ): FileManager {
+
+    companion object{
+        private const val BufferSize = 1024
+    }
 
     override suspend fun fileExists(fileName: FileName): Result<Boolean> {
         return runCatchingWithDispatcher(Dispatchers.IO){
@@ -42,19 +45,15 @@ class InternalStorageFileManager @Inject constructor(
     override suspend fun saveDataAndReturnStreamReference(
         fileName: FileName,
         response: InputStream
-    ): Result<InputStream?> {
+    ): Result<InputStream> {
         return runCatchingWithDispatcher(Dispatchers.IO){
             try {
                 getFileInstance(fileName).fold({file ->
-                    FileOutputStream(file).use {stream ->
-                        val buffer = ByteArray(1024)
-                        var bytesRead: Int
-                        while (response.read(buffer).also { bytesRead = it } != -1){
-                            stream.write(buffer, 0 , bytesRead)
-                        }
-                    }
-                    response.close()
-                    FileInputStream(file.absolutePath)
+                    copyFilesGetFileReference(response, file).fold({
+                        it
+                    },{
+                        throw it
+                    })
                 },{
                     throw it
                 })
@@ -77,11 +76,19 @@ class InternalStorageFileManager @Inject constructor(
             }
         }
     }
-}
 
-
-suspend fun <T> runCatchingWithDispatcher(dispatcher: CoroutineDispatcher, block: suspend () -> T): Result<T> {
-    return withContext(dispatcher) {
-        runCatching{ block() }
+    private suspend fun copyFilesGetFileReference(inputStream: InputStream, outputFile: File): Result<FileInputStream>{
+        return runCatchingWithDispatcher(Dispatchers.IO) {
+            FileOutputStream(outputFile).use { stream ->
+                val buffer = ByteArray(BufferSize)
+                var bytesRead: Int
+                inputStream.use { responseStream ->
+                    while (responseStream.read(buffer).also { bytesRead = it } != -1) {
+                        stream.write(buffer, 0, bytesRead)
+                    }
+                }
+            }
+            FileInputStream(outputFile.absolutePath)
+        }
     }
 }
