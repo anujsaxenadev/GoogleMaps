@@ -24,7 +24,7 @@ class OptimisedWebViewClient(
         // Is Map Tiles
         if(request?.checkIfMapTileRequest() == true){
             return runBlocking(Dispatchers.IO) {
-                val isCached = fileManager.fileExists(request.getUniqueIdentifier())
+                val isCached = fileManager.fileExists(request.getUniqueIdentifier()).getOrDefault(false)
                 if(isCached){
                     Log.e("OptimisedWebViewClient: ", "Cached")
                     val response = networkManager.doGetRequest(request.url.toString())
@@ -32,7 +32,7 @@ class OptimisedWebViewClient(
                         response.header("content-type", "image/*"),
                         response.header("content-encoding", "utf-8"),
                         if(response.body != null){
-                            fileManager.saveDataAndReturnStreamReference(request.getUniqueIdentifier(), response.body!!.byteStream())
+                            fileManager.saveDataAndReturnStreamReference(request.getUniqueIdentifier(), response.body!!.byteStream()).getOrNull()
                         }
                         else{
                             null
@@ -44,7 +44,7 @@ class OptimisedWebViewClient(
                     WebResourceResponse(
                         "image/*",
                         "UTF-8",
-                        FileInputStream(fileManager.createNewFile(request.getUniqueIdentifier()))
+                        FileInputStream(fileManager.createNewFile(request.getUniqueIdentifier()).getOrNull())
                     )
                 }
             }

@@ -5,9 +5,9 @@ import java.io.File
 import java.io.InputStream
 
 interface FileManager {
-    suspend fun fileExists(fileName: FileName): Boolean
+    suspend fun fileExists(fileName: FileName): Result<Boolean>
 
-    suspend fun saveDataAndReturnStreamReference(fileName: FileName, response: InputStream): InputStream
+    suspend fun saveDataAndReturnStreamReference(fileName: FileName, response: InputStream): Result<InputStream?>
 
-    suspend fun createNewFile(fileName: FileName): File
+    suspend fun createNewFile(fileName: FileName): Result<File>
 }
