@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "GoogleMaps"
 include(":app")
 include(":file_manager")
+include(":network_manager")

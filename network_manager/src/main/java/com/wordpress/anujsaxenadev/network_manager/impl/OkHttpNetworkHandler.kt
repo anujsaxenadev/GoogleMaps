@@ -6,8 +6,11 @@ import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class OkHttpNetworkHandler: NetworkManager {
+@Singleton
+class OkHttpNetworkHandler @Inject constructor(): NetworkManager {
     private val networkClient: OkHttpClient by lazy {
         OkHttpClient()
     }
