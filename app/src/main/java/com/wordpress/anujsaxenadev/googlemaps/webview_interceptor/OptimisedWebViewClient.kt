@@ -9,6 +9,7 @@ import com.wordpress.anujsaxenadev.file_manager.FileManager
 import com.wordpress.anujsaxenadev.googlemaps.core.checkIfMapTileRequest
 import com.wordpress.anujsaxenadev.googlemaps.core.getUniqueIdentifier
 import com.wordpress.anujsaxenadev.network_manager.NetworkManager
+import com.wordpress.anujsaxenadev.network_manager.models.Response
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import java.io.FileInputStream
@@ -27,17 +28,17 @@ class OptimisedWebViewClient(
                 val isCached = fileManager.fileExists(request.getUniqueIdentifier()).getOrDefault(false)
                 if(isCached){
                     Log.e("OptimisedWebViewClient: ", "Cached")
-                    val response = networkManager.doGetRequest(request.url.toString())
-                    WebResourceResponse(
-                        response.header("content-type", "image/*"),
-                        response.header("content-encoding", "utf-8"),
-                        if(response.body != null){
-                            fileManager.saveDataAndReturnStreamReference(request.getUniqueIdentifier(), response.body!!.byteStream()).getOrNull()
-                        }
-                        else{
-                            null
-                        }
-                    )
+                    val response: Result<Response> = networkManager.doGetRequest(request.url.toString())
+                    response.fold({
+
+                        WebResourceResponse(
+                            it.headers["content-type"],
+                            it.headers["content-encoding"],
+                            fileManager.saveDataAndReturnStreamReference(request.getUniqueIdentifier(), it.response).getOrNull()
+                        )
+                    }, {
+                        throw it
+                    })
                 }
                 else{
                     Log.e("OptimisedWebViewClient: ", "Not Cached")

@@ -1,7 +1,8 @@
 package com.wordpress.anujsaxenadev.network_manager
 
-import okhttp3.Response
+import com.wordpress.anujsaxenadev.network_manager.models.Response
+
 
 interface NetworkManager {
-    suspend fun doGetRequest(url: String): Response
+    suspend fun doGetRequest(url: String): Result<Response>
 }
