@@ -1,8 +1,8 @@
 package com.wordpress.anujsaxenadev.file_manager.impl
 
 import android.content.Context
+import com.wordpress.anujsaxenadev.common.runCatchingWithDispatcher
 import com.wordpress.anujsaxenadev.file_manager.FileManager
-import com.wordpress.anujsaxenadev.file_manager.runCatchingWithDispatcher
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import java.io.File
@@ -33,12 +33,7 @@ class InternalStorageFileManager @Inject constructor(
 
     private suspend fun getFileInstance(fileName: FileName): Result<File> {
         return runCatchingWithDispatcher(Dispatchers.IO){
-            try {
-                File(context.cacheDir, fileName)
-            }
-            catch (e: Throwable){
-                throw e
-            }
+            File(context.cacheDir, fileName)
         }
     }
 
@@ -66,14 +61,9 @@ class InternalStorageFileManager @Inject constructor(
 
     override suspend fun createNewFile(fileName: FileName): Result<File>{
         return runCatchingWithDispatcher(Dispatchers.IO){
-            try {
-                val file = File(context.cacheDir, fileName)
-                file.createNewFile()
-                file
-            }
-            catch (e: Throwable){
-                throw e
-            }
+            val file = File(context.cacheDir, fileName)
+            file.createNewFile()
+            file
         }
     }
 
