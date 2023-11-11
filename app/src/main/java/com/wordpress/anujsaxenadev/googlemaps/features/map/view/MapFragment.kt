@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.wordpress.anujsaxenadev.googlemaps.core.ApplicationConstants
-import com.wordpress.anujsaxenadev.googlemaps.core.applyMapSettings
+import com.wordpress.anujsaxenadev.googlemaps.core.extensions.applyMapSettings
 import com.wordpress.anujsaxenadev.googlemaps.databinding.FragmentMapBinding
 import com.wordpress.anujsaxenadev.googlemaps.features.map.view_model.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint

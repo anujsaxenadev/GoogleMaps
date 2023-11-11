@@ -1,7 +1,7 @@
 package com.wordpress.anujsaxenadev.resource_manager.impl
 
 import android.content.Context
-import com.wordpress.anujsaxenadev.common.runCatchingWithDispatcher
+import com.wordpress.anujsaxenadev.common.extensions.runCatchingWithDispatcher
 import com.wordpress.anujsaxenadev.resource_manager.ResourceManager
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers

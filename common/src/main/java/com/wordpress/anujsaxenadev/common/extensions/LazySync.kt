@@ -1,4 +1,4 @@
-package com.wordpress.anujsaxenadev.common
+package com.wordpress.anujsaxenadev.common.extensions
 
 /**
  * Wrapper function to `lazy` for thread safe creation of variables.

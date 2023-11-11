@@ -5,9 +5,9 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.wordpress.anujsaxenadev.common.runCatchingWithDispatcher
-import com.wordpress.anujsaxenadev.googlemaps.core.checkIfMapTileRequest
-import com.wordpress.anujsaxenadev.googlemaps.core.getUniqueIdentifier
+import com.wordpress.anujsaxenadev.common.extensions.runCatchingWithDispatcher
+import com.wordpress.anujsaxenadev.googlemaps.core.extensions.checkIfMapTileRequest
+import com.wordpress.anujsaxenadev.googlemaps.core.extensions.getUniqueIdentifier
 import com.wordpress.anujsaxenadev.googlemaps.features.map.repository.MapRepository
 import com.wordpress.anujsaxenadev.network_manager.NetworkManager
 import com.wordpress.anujsaxenadev.network_manager.models.Response

@@ -1,7 +1,7 @@
 package com.wordpress.anujsaxenadev.database_manager.helpers.map_helper
 
-import com.wordpress.anujsaxenadev.common.Nothing
-import com.wordpress.anujsaxenadev.common.runCatchingWithDispatcher
+import com.wordpress.anujsaxenadev.common.models.Nothing
+import com.wordpress.anujsaxenadev.common.extensions.runCatchingWithDispatcher
 import com.wordpress.anujsaxenadev.database_manager.MapDatabase
 import com.wordpress.anujsaxenadev.database_manager.model.MapResource
 import kotlinx.coroutines.Dispatchers

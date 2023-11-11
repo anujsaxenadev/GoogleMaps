@@ -1,7 +1,7 @@
 package com.wordpress.anujsaxenadev.network_manager.impl
 
-import com.wordpress.anujsaxenadev.common.lazySync
-import com.wordpress.anujsaxenadev.common.runCatchingWithDispatcher
+import com.wordpress.anujsaxenadev.common.extensions.lazySync
+import com.wordpress.anujsaxenadev.common.extensions.runCatchingWithDispatcher
 import com.wordpress.anujsaxenadev.network_manager.NetworkManager
 import com.wordpress.anujsaxenadev.network_manager.models.Response
 import kotlinx.coroutines.Dispatchers
