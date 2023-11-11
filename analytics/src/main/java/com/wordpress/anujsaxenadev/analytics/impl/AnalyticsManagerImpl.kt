@@ -6,6 +6,9 @@ import com.wordpress.anujsaxenadev.analytics.helpers.impl.FirebaseAnalyticsHelpe
 import com.wordpress.anujsaxenadev.analytics.helpers.impl.LogcatAnalyticsHelper
 import javax.inject.Inject
 
+/**
+ * Reponsible for Logging different type of loggers
+ */
 internal class AnalyticsManagerImpl @Inject constructor(
     private val logcatAnalyticsHelper: LogcatAnalyticsHelper,
     private val firebaseAnalyticsHelper: FirebaseAnalyticsHelper
