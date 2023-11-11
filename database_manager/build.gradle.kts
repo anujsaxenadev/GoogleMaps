@@ -35,13 +35,7 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.roomRuntime)
-    annotationProcessor(Dependencies.roomAnnotationProcessor)
-    ksp(Dependencies.roomCompiler)
-    implementation(Dependencies.roomKotlinExtension)
-
-    implementation(Dependencies.hiltAndroid)
-    ksp(Dependencies.hiltCompiler)
-
+    room()
+    hilt()
     implementation(project(":common"))
 }

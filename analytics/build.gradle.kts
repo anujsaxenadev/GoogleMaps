@@ -37,6 +37,5 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.hiltAndroid)
-    ksp(Dependencies.hiltCompiler)
+    hilt()
 }

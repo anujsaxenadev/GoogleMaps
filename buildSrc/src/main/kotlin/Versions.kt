@@ -9,4 +9,5 @@ object Versions {
     const val dataBinding = "8.1.3"
     const val okhttp = "4.12.0"
     const val room = "2.6.0"
+    const val coroutineCore = "1.7.3"
 }

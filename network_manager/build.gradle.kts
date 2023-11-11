@@ -37,10 +37,7 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.okhttp)
-
-    implementation(Dependencies.hiltAndroid)
-    ksp(Dependencies.hiltCompiler)
-
+    okhttp()
+    hilt()
     implementation(project(":common"))
 }

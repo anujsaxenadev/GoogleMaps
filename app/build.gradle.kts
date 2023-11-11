@@ -40,23 +40,15 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.coreKotlin)
-    implementation(Dependencies.appCompat)
-    implementation(Dependencies.material)
+    coreKotlin()
+    appCompat()
+    material()
 
-    implementation(Dependencies.activityKotlinExtension)
-    implementation(Dependencies.fragmentKotlinExtension)
-
-
-    implementation(Dependencies.hiltAndroid)
-    ksp(Dependencies.hiltCompiler)
+    kotlinViewExtensions()
+    hilt()
+    dataBinding()
 
 
-    ksp(Dependencies.dataBinding)
-
-
-
-    implementation(project(":resource_manager"))
     implementation(project(":network_manager"))
     implementation(project(":database_manager"))
     implementation(project(":analytics"))
