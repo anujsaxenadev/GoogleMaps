@@ -13,7 +13,6 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/common" />
-            <option value="$PROJECT_DIR$/file_manager" />
             <option value="$PROJECT_DIR$/network_manager" />
             <option value="$PROJECT_DIR$/resource_manager" />
           </set>

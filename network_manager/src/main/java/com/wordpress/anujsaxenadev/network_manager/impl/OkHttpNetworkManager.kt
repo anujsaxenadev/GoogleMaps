@@ -10,11 +10,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class OkHttpNetworkHandler @Inject constructor(): NetworkManager {
+internal class OkHttpNetworkManager @Inject constructor(): NetworkManager {
     companion object{
         private const val bodyNull = "Body of Request is Null"
     }
-    private val networkClient: OkHttpClient by lazy {
+    private val networkClient: OkHttpClient by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
         OkHttpClient()
     }
 
