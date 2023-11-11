@@ -37,6 +37,13 @@ suspend fun WebResourceRequest.getUniqueIdentifier(): Result<String>{
     }
 }
 
-fun WebResourceRequest.checkIfMapTileRequest(): Boolean{
-    return url.toString().startsWith("https://maps.googleapis.com/maps/vt")
+suspend fun WebResourceRequest.shouldOmitRequest(): Result<Boolean>{
+    return runCatchingWithDispatcher(Dispatchers.Default){
+        this.requestHeaders.keys.forEach {
+            if(it.lowercase().contains("origin")){
+                return@runCatchingWithDispatcher true
+            }
+        }
+        false
+    }
 }

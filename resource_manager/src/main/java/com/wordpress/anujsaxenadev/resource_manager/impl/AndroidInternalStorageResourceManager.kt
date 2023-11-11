@@ -1,6 +1,7 @@
 package com.wordpress.anujsaxenadev.resource_manager.impl
 
 import android.content.Context
+import android.util.Log
 import com.wordpress.anujsaxenadev.common.extensions.runCatchingWithDispatcher
 import com.wordpress.anujsaxenadev.resource_manager.ResourceManager
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -39,7 +40,10 @@ internal class AndroidInternalStorageResourceManager @Inject constructor(
     ): Result<InputStream> {
         return runCatchingWithDispatcher(Dispatchers.IO){
             getInternalFileInstance(resourceName).fold({ outputFile ->
+                Log.e("anuj-log", resourceName)
+                outputFile.createNewFile()
                 copyFilesGetFileReference(
+                    resourceName = resourceName,
                     inputStream = response,
                     outputFile = outputFile
                 ).fold({
@@ -63,7 +67,10 @@ internal class AndroidInternalStorageResourceManager @Inject constructor(
         }
     }
 
-    private suspend fun copyFilesGetFileReference(inputStream: InputStream, outputFile: File): Result<InputStream>{
+    private suspend fun copyFilesGetFileReference(
+        resourceName: ResourceName,
+        inputStream: InputStream,
+        outputFile: File): Result<InputStream>{
         return runCatchingWithDispatcher(Dispatchers.IO) {
             FileOutputStream(outputFile).use { stream ->
                 // Keeping Buffer Size for 1024 for Stream
@@ -75,7 +82,7 @@ internal class AndroidInternalStorageResourceManager @Inject constructor(
                     }
                 }
             }
-            getResourceReference(outputFile.absolutePath).fold({
+            getResourceReference(resourceName).fold({
                 it
             }, {
                 throw it

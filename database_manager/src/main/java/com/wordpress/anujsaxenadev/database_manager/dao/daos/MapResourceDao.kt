@@ -10,7 +10,7 @@ import com.wordpress.anujsaxenadev.database_manager.model.MapResource
 interface MapResourceDao{
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(mapResource: MapResource): Long
+    suspend fun insert(mapResource: MapResource)
 
     @Query(
         value = """

@@ -16,4 +16,8 @@ data class MapResource(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "index")
     var resourceIndex: Int = 0
+
+    fun getResourceName(): String{
+        return resourceIndex.toString()
+    }
 }

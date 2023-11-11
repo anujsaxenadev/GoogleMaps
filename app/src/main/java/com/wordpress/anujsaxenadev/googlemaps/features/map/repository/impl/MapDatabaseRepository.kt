@@ -14,4 +14,8 @@ class MapDatabaseRepository @Inject constructor(private val mapDatabaseHelper: M
         return mapDatabaseHelper.storeResourceAndGetFileName(resourceId)
     }
 
+    override suspend fun getResourceName(resourceId: String): Result<String>{
+        return mapDatabaseHelper.getResourceName(resourceId)
+    }
+
 }

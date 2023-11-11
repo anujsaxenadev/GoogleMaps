@@ -1,6 +1,5 @@
 package com.wordpress.anujsaxenadev.database_manager.helpers.map_helper
 
-import com.wordpress.anujsaxenadev.common.models.Nothing
 import com.wordpress.anujsaxenadev.common.extensions.runCatchingWithDispatcher
 import com.wordpress.anujsaxenadev.database_manager.MapDatabase
 import com.wordpress.anujsaxenadev.database_manager.model.MapResource
@@ -15,6 +14,16 @@ class MapDatabaseHelperImpl @Inject constructor(private val database: MapDatabas
         }
     }
 
+    override suspend fun getResourceName(resourceId: String): Result<String>{
+        return runCatchingWithDispatcher(Dispatchers.IO){
+            getResourceByResourceId(resourceId).fold({
+                it.getResourceName()
+            }, {
+                throw it
+            })
+        }
+    }
+
     private suspend fun getResourceByResourceId(resourceId: String): Result<MapResource>{
         return runCatchingWithDispatcher(Dispatchers.IO) {
             database.mapResourcesDao().getResourceByResourceId(resourceId)
@@ -22,12 +31,9 @@ class MapDatabaseHelperImpl @Inject constructor(private val database: MapDatabas
         }
     }
 
-    private suspend fun insertResource(mapResource: MapResource): Result<Nothing>{
+    private suspend fun insertResource(mapResource: MapResource): Result<Unit>{
         return runCatchingWithDispatcher(Dispatchers.IO){
-            if(database.mapResourcesDao().insert(mapResource) == 1L)
-                Nothing()
-            else
-                throw Exception("Error In Saving Map Data")
+            database.mapResourcesDao().insert(mapResource)
         }
     }
 
@@ -35,7 +41,7 @@ class MapDatabaseHelperImpl @Inject constructor(private val database: MapDatabas
         return runCatchingWithDispatcher(Dispatchers.IO){
             insertResource(MapResource(resourceId)).fold({
                 getResourceByResourceId(resourceId).fold({
-                    it.resourceIndex.toString()
+                    it.getResourceName()
                 }, {
                     throw it
                 })
