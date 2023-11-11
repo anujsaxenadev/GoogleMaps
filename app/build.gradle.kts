@@ -51,4 +51,5 @@ dependencies {
 
     implementation(project(":file_manager"))
     implementation(project(":network_manager"))
+    implementation(project(":common"))
 }
