@@ -9,14 +9,14 @@ import androidx.fragment.app.activityViewModels
 import com.wordpress.anujsaxenadev.googlemaps.core.ApplicationConstants
 import com.wordpress.anujsaxenadev.googlemaps.core.extensions.applyMapSettings
 import com.wordpress.anujsaxenadev.googlemaps.databinding.FragmentMapBinding
-import com.wordpress.anujsaxenadev.googlemaps.features.map.view_model.MainViewModel
+import com.wordpress.anujsaxenadev.googlemaps.features.map.view_model.MapViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class MapFragment: Fragment(){
     private var fragmentMapBinding: FragmentMapBinding? = null
-    private val mainViewModel by activityViewModels<MainViewModel>()
+    private val mapViewModel by activityViewModels<MapViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +34,7 @@ class MapFragment: Fragment(){
 
     private fun inflateMap(){
         fragmentMapBinding?.mapView?.apply {
-            webViewClient = mainViewModel.getWebViewClient()
+            webViewClient = mapViewModel.getWebViewClient()
             settings.applyMapSettings()
             loadUrl(ApplicationConstants.MAP_RESOURCES_REFERENCE)
         }
