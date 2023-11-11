@@ -17,16 +17,6 @@ internal class AndroidInternalStorageResourceManager @Inject constructor(
     @ApplicationContext private val context: Context
 ): ResourceManager {
 
-    override suspend fun resourceExists(resourceName: ResourceName): Result<Boolean> {
-        return runCatchingWithDispatcher(Dispatchers.IO){
-            getInternalFileInstance(resourceName).fold({
-                it.exists()
-            }, {
-                throw it
-            })
-        }
-    }
-
     private suspend fun getInternalFileInstance(resourceName: ResourceName): Result<File> {
         return runCatchingWithDispatcher(Dispatchers.IO){
             File(context.cacheDir, resourceName)

@@ -6,13 +6,6 @@ import java.io.InputStream
 interface ResourceManager {
 
     /**
-     * @param resourceName - Name of the Resource that we need to check.
-     *
-     * @return [Result] of `true` -  if resource exists, `false` -  if resource does not exist, [Throwable] - if there is some error happened while checking.
-     */
-    suspend fun resourceExists(resourceName: ResourceName): Result<Boolean>
-
-    /**
      * @param resourceName - Name of the Resource that need to be stored.
      * @param response - [InputStream] stream reference to the input resource that need to be saved.
      *
