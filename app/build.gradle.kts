@@ -49,7 +49,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.48.1")
     ksp("com.google.dagger:hilt-compiler:2.48")
 
-    implementation(project(":file_manager"))
+    implementation(project(":resource_manager"))
     implementation(project(":network_manager"))
     implementation(project(":common"))
 }

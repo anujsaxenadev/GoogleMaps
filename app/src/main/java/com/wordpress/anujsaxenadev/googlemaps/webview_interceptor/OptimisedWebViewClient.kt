@@ -6,19 +6,16 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.wordpress.anujsaxenadev.common.runCatchingWithDispatcher
-import com.wordpress.anujsaxenadev.file_manager.FileManager
 import com.wordpress.anujsaxenadev.googlemaps.core.checkIfMapTileRequest
 import com.wordpress.anujsaxenadev.googlemaps.core.getUniqueIdentifier
 import com.wordpress.anujsaxenadev.network_manager.NetworkManager
 import com.wordpress.anujsaxenadev.network_manager.models.Response
+import com.wordpress.anujsaxenadev.resource_manager.ResourceManager
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
-import java.io.FileInputStream
 
 class OptimisedWebViewClient(
-    private val fileManager: FileManager,
+    private val resourceManager: ResourceManager,
     private val networkManager: NetworkManager
 ): WebViewClient() {
     override fun shouldInterceptRequest(
@@ -29,13 +26,13 @@ class OptimisedWebViewClient(
         if(request?.checkIfMapTileRequest() == true){
             return runBlocking {
                 runCatchingWithDispatcher(Dispatchers.IO){
-                    val isCached = fileManager.fileExists(request.getUniqueIdentifier()).getOrDefault(false)
+                    val isCached = resourceManager.resourceExists(request.getUniqueIdentifier()).getOrDefault(false)
                     if(isCached){
                         Log.e("OptimisedWebViewClient: ", "Cached")
                         WebResourceResponse(
                             "image/*",
                             "UTF-8",
-                            FileInputStream(fileManager.createNewFile(request.getUniqueIdentifier()).getOrNull())
+                            resourceManager.getResourceReference(request.getUniqueIdentifier()).getOrNull()
                         )
                     }
                     else{
@@ -45,7 +42,7 @@ class OptimisedWebViewClient(
                             WebResourceResponse(
                                 it.headers["content-type"],
                                 it.headers["content-encoding"],
-                                fileManager.saveDataAndReturnStreamReference(request.getUniqueIdentifier(), it.response).getOrNull()
+                                resourceManager.saveResourceAndGetReference(request.getUniqueIdentifier(), it.response).getOrNull()
                             )
                         }, {
                             throw it
