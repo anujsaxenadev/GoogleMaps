@@ -8,6 +8,7 @@ import android.webkit.WebViewClient
 import com.wordpress.anujsaxenadev.common.runCatchingWithDispatcher
 import com.wordpress.anujsaxenadev.googlemaps.core.checkIfMapTileRequest
 import com.wordpress.anujsaxenadev.googlemaps.core.getUniqueIdentifier
+import com.wordpress.anujsaxenadev.googlemaps.features.map.repository.MapRepository
 import com.wordpress.anujsaxenadev.network_manager.NetworkManager
 import com.wordpress.anujsaxenadev.network_manager.models.Response
 import com.wordpress.anujsaxenadev.resource_manager.ResourceManager
@@ -16,7 +17,8 @@ import kotlinx.coroutines.runBlocking
 
 class OptimisedWebViewClient(
     private val resourceManager: ResourceManager,
-    private val networkManager: NetworkManager
+    private val networkManager: NetworkManager,
+    private val mapRepository: MapRepository
 ): WebViewClient() {
     override fun shouldInterceptRequest(
         view: WebView?,

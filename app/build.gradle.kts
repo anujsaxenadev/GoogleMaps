@@ -58,5 +58,6 @@ dependencies {
 
     implementation(project(":resource_manager"))
     implementation(project(":network_manager"))
+    implementation(project(":database_manager"))
     implementation(project(":common"))
 }

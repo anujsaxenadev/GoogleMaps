@@ -15,5 +15,5 @@ data class MapResource(
 ){
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "index")
-    val resourceIndex: Int = 0
+    var resourceIndex: Int = 0
 }
