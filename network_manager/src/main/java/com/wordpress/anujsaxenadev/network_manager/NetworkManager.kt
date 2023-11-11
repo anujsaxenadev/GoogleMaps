@@ -1,14 +1,14 @@
 package com.wordpress.anujsaxenadev.network_manager
 
-import com.wordpress.anujsaxenadev.network_manager.impl.URL
+import android.webkit.WebResourceRequest
 import com.wordpress.anujsaxenadev.network_manager.models.Response
 
 
 interface NetworkManager {
     /**
-     * @param url - takes URL for get Network Call from OKHttp.
+     * @param request takes [WebResourceRequest] which comes from a Webview
      *
      * @return [Result] of [Response] - if able to get the response from server - [Throwable] if any Error happens during this process.
      */
-    suspend fun doGetRequest(url: URL): Result<Response>
+    suspend fun processRequest(request: WebResourceRequest): Result<Response>
 }

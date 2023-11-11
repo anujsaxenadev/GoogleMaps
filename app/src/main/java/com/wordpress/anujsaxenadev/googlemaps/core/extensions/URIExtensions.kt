@@ -3,9 +3,10 @@ package com.wordpress.anujsaxenadev.googlemaps.core.extensions
 import android.net.Uri
 import com.wordpress.anujsaxenadev.common.extensions.runCatchingWithDispatcher
 import kotlinx.coroutines.Dispatchers
+import java.util.regex.Pattern
 
 suspend fun Uri.getUniqueIdentifier(): Result<String>{
-    return runCatchingWithDispatcher(Dispatchers.IO){
+    return runCatchingWithDispatcher(Dispatchers.Default){
         val builder = StringBuilder()
         val separator = '-'
 
@@ -33,3 +34,12 @@ suspend fun Uri.getUniqueIdentifier(): Result<String>{
         builder.toString()
     }
 }
+
+//fun Uri.getUrlFromUri(): String? {
+//    val regex = Regex("(https?|ftp)://\\S+")
+//    val matcher = Pattern.compile(toString())
+//    if (matcher.find()) {
+//        return matcher.group(0)
+//    }
+//    return null
+//}

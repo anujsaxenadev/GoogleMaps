@@ -13,7 +13,7 @@ fun WebSettings.applyMapSettings(){
 }
 
 suspend fun WebResourceRequest.getUniqueIdentifier(): Result<String>{
-    return runCatchingWithDispatcher(Dispatchers.IO) {
+    return runCatchingWithDispatcher(Dispatchers.Default) {
         val identifierBuilder = StringBuilder()
         val separator = '-'
 
