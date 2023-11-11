@@ -13,17 +13,13 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class InternalStorageFileManager @Inject constructor(
+internal class InternalStorageFileManager @Inject constructor(
     @ApplicationContext private val context: Context
 ): FileManager {
 
-    companion object{
-        private const val BufferSize = 1024
-    }
-
     override suspend fun fileExists(fileName: FileName): Result<Boolean> {
         return runCatchingWithDispatcher(Dispatchers.IO){
-            getFileInstance(fileName).fold({
+            getInteralFileInstance(fileName).fold({
                 it.exists()
             }, {
                 throw it
@@ -31,7 +27,7 @@ class InternalStorageFileManager @Inject constructor(
         }
     }
 
-    private suspend fun getFileInstance(fileName: FileName): Result<File> {
+    private suspend fun getInteralFileInstance(fileName: FileName): Result<File> {
         return runCatchingWithDispatcher(Dispatchers.IO){
             File(context.cacheDir, fileName)
         }
@@ -42,35 +38,37 @@ class InternalStorageFileManager @Inject constructor(
         response: InputStream
     ): Result<InputStream> {
         return runCatchingWithDispatcher(Dispatchers.IO){
-            try {
-                getFileInstance(fileName).fold({file ->
-                    copyFilesGetFileReference(response, file).fold({
-                        it
-                    },{
-                        throw it
-                    })
+            getInteralFileInstance(fileName).fold({ outputFile ->
+                copyFilesGetFileReference(
+                    inputStream = response,
+                    outputFile = outputFile
+                ).fold({
+                    it
                 },{
                     throw it
                 })
-            }
-            catch (e: Throwable){
-                throw e
-            }
+            },{
+                throw it
+            })
         }
     }
 
     override suspend fun createNewFile(fileName: FileName): Result<File>{
         return runCatchingWithDispatcher(Dispatchers.IO){
-            val file = File(context.cacheDir, fileName)
-            file.createNewFile()
-            file
+            getInteralFileInstance(fileName).fold({
+                it.createNewFile()
+                it
+            }, {
+                throw it
+            })
         }
     }
 
     private suspend fun copyFilesGetFileReference(inputStream: InputStream, outputFile: File): Result<FileInputStream>{
         return runCatchingWithDispatcher(Dispatchers.IO) {
             FileOutputStream(outputFile).use { stream ->
-                val buffer = ByteArray(BufferSize)
+                // Keeping Buffer Size for 1024 for Stream
+                val buffer = ByteArray(size = 1024)
                 var bytesRead: Int
                 inputStream.use { responseStream ->
                     while (responseStream.read(buffer).also { bytesRead = it } != -1) {

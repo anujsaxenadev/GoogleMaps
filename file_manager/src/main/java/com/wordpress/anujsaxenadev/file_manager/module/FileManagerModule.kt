@@ -11,5 +11,5 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 abstract class FileManagerModule {
     @Binds
-    abstract fun bindsFileManager(internalStorageFileManager: InternalStorageFileManager): FileManager
+    internal abstract fun bindsFileManager(internalStorageFileManager: InternalStorageFileManager): FileManager
 }
