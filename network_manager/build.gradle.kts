@@ -8,6 +8,9 @@ android {
     namespace = "com.wordpress.anujsaxenadev.network_manager"
     compileSdk = 34
 
+    dataBinding{
+        enable  = true
+    }
     defaultConfig {
         minSdk = 24
 

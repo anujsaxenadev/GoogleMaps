@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import com.wordpress.anujsaxenadev.googlemaps.features.map.view.MapFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity(){
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
 
+        // Map Feature
         if(savedInstanceState == null){
             supportFragmentManager.commit {
                 setReorderingAllowed(true)

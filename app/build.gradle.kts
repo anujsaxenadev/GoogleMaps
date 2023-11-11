@@ -8,7 +8,9 @@ plugins {
 android {
     namespace = "com.wordpress.anujsaxenadev.googlemaps"
     compileSdk = 34
-
+    buildFeatures {
+        dataBinding = true
+    }
     defaultConfig {
         applicationId = "com.wordpress.anujsaxenadev.googlemaps"
         minSdk = 24
@@ -48,6 +50,11 @@ dependencies {
 
     implementation("com.google.dagger:hilt-android:2.48.1")
     ksp("com.google.dagger:hilt-compiler:2.48")
+
+
+    ksp("androidx.databinding:databinding-compiler:8.1.3")
+
+
 
     implementation(project(":resource_manager"))
     implementation(project(":network_manager"))

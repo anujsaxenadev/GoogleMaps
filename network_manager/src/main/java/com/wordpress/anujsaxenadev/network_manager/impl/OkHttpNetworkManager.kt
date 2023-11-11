@@ -1,5 +1,6 @@
 package com.wordpress.anujsaxenadev.network_manager.impl
 
+import com.wordpress.anujsaxenadev.common.lazySync
 import com.wordpress.anujsaxenadev.common.runCatchingWithDispatcher
 import com.wordpress.anujsaxenadev.network_manager.NetworkManager
 import com.wordpress.anujsaxenadev.network_manager.models.Response
@@ -14,7 +15,7 @@ internal class OkHttpNetworkManager @Inject constructor(): NetworkManager {
     companion object{
         private const val bodyNull = "Body of Request is Null"
     }
-    private val networkClient: OkHttpClient by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+    private val networkClient: OkHttpClient by lazySync {
         OkHttpClient()
     }
 
