@@ -1,4 +1,4 @@
-package com.wordpress.anujsaxenadev.database_manager.helpers
+package com.wordpress.anujsaxenadev.database_manager.di
 
 import com.wordpress.anujsaxenadev.database_manager.helpers.map_helper.MapDatabaseHelper
 import com.wordpress.anujsaxenadev.database_manager.helpers.map_helper.MapDatabaseHelperImpl
@@ -9,9 +9,9 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class HelperModule {
+internal abstract class HelperModule {
     @Binds
-    abstract fun bindsMapDatabaseHelper(
+    internal abstract fun bindsMapDatabaseHelper(
         mapDatabaseHelperImpl: MapDatabaseHelperImpl
     ): MapDatabaseHelper
 }

@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
     tableName = "map_resources",
     indices = [Index(value = ["resource_id"], unique = true)]
 )
-data class MapResource(
+internal data class MapResource(
     @ColumnInfo(name = "resource_id")
     val resourceId: String
 ){

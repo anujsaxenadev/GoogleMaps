@@ -1,12 +1,12 @@
 package com.wordpress.anujsaxenadev.database_manager.helpers.map_helper
 
 import com.wordpress.anujsaxenadev.common.extensions.runCatchingWithDispatcher
-import com.wordpress.anujsaxenadev.database_manager.MapDatabase
+import com.wordpress.anujsaxenadev.database_manager.databases.MapDatabase
 import com.wordpress.anujsaxenadev.database_manager.model.MapResource
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
-class MapDatabaseHelperImpl @Inject constructor(private val database: MapDatabase):
+internal class MapDatabaseHelperImpl @Inject constructor(private val database: MapDatabase):
     MapDatabaseHelper {
     override suspend fun checkResourceExist(resourceId: String): Result<Boolean> {
         return runCatchingWithDispatcher(Dispatchers.IO){

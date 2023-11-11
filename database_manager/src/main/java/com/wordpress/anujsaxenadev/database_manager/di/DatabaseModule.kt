@@ -1,8 +1,8 @@
-package com.wordpress.anujsaxenadev.database_manager.module
+package com.wordpress.anujsaxenadev.database_manager.di
 
 import android.content.Context
 import androidx.room.Room
-import com.wordpress.anujsaxenadev.database_manager.MapDatabase
+import com.wordpress.anujsaxenadev.database_manager.databases.MapDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,10 +12,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DatabaseModule {
+internal object DatabaseModule {
     @Provides
     @Singleton
-    fun providesMapDatabase(
+    internal fun providesMapDatabase(
         @ApplicationContext context: Context,
     ): MapDatabase = Room.databaseBuilder(
         context,

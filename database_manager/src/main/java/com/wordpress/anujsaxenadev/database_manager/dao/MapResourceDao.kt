@@ -1,4 +1,4 @@
-package com.wordpress.anujsaxenadev.database_manager.dao.daos
+package com.wordpress.anujsaxenadev.database_manager.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -7,8 +7,7 @@ import androidx.room.Query
 import com.wordpress.anujsaxenadev.database_manager.model.MapResource
 
 @Dao
-interface MapResourceDao{
-
+internal interface MapResourceDao{
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(mapResource: MapResource)
 
