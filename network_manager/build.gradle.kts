@@ -37,8 +37,10 @@ android {
 }
 
 dependencies {
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("com.google.dagger:hilt-android:2.48.1")
-    ksp("com.google.dagger:hilt-compiler:2.48")
+    implementation(Dependencies.okhttp)
+
+    implementation(Dependencies.hiltAndroid)
+    ksp(Dependencies.hiltCompiler)
+
     implementation(project(":common"))
 }

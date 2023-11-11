@@ -40,19 +40,19 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
+    implementation(Dependencies.coreKotlin)
+    implementation(Dependencies.appCompat)
+    implementation(Dependencies.material)
 
-    implementation("androidx.activity:activity-ktx:1.8.0")
-    implementation("androidx.fragment:fragment-ktx:1.6.2")
-
-
-    implementation("com.google.dagger:hilt-android:2.48.1")
-    ksp("com.google.dagger:hilt-compiler:2.48")
+    implementation(Dependencies.activityKotlinExtension)
+    implementation(Dependencies.fragmentKotlinExtension)
 
 
-    ksp("androidx.databinding:databinding-compiler:8.1.3")
+    implementation(Dependencies.hiltAndroid)
+    ksp(Dependencies.hiltCompiler)
+
+
+    ksp(Dependencies.dataBinding)
 
 
 

@@ -1,0 +1,15 @@
+object Dependencies {
+    const val coreKotlin = "androidx.core:core-ktx:${Versions.coreKotlin}"
+    const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
+    const val material = "com.google.android.material:material:${Versions.material}"
+    const val activityKotlinExtension = "androidx.activity:activity-ktx:${Versions.activityKotlinExtension}"
+    const val fragmentKotlinExtension = "androidx.fragment:fragment-ktx:${Versions.fragmentKotlinExtension}"
+    const val hiltAndroid = "com.google.dagger:hilt-android:${Versions.hiltAndroid}"
+    const val hiltCompiler = "com.google.dagger:hilt-compiler:${Versions.hiltCompiler}"
+    const val dataBinding = "androidx.databinding:databinding-compiler:${Versions.dataBinding}"
+    const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
+    const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
+    const val roomAnnotationProcessor = "androidx.room:room-compiler:${Versions.room}"
+    const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
+    const val roomKotlinExtension = "androidx.room:room-ktx:${Versions.room}"
+}
