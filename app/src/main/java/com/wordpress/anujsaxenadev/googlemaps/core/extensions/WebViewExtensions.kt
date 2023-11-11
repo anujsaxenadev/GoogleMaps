@@ -9,7 +9,7 @@ fun WebSettings.applyMapSettings(){
     javaScriptEnabled = true
     javaScriptCanOpenWindowsAutomatically = true
     domStorageEnabled = true
-    cacheMode = WebSettings.LOAD_NO_CACHE
+    cacheMode = WebSettings.LOAD_DEFAULT
 }
 
 suspend fun WebResourceRequest.getUniqueIdentifier(): Result<String>{
@@ -45,5 +45,24 @@ suspend fun WebResourceRequest.shouldOmitRequest(): Result<Boolean>{
             }
         }
         false
+    }
+}
+
+fun WebResourceRequest.getContentType(): String {
+    // First, check if the content type is specified in the request headers.
+    var contentType: String? = requestHeaders["Content-Type"]
+
+    return if(contentType != null){
+        contentType
+    }
+    else {
+        // If the content type is not specified in the request headers, try to get it from the request method.
+        contentType = when (method) {
+            "POST" -> "application/x-www-form-urlencoded"
+            "PUT" -> "application/octet-stream"
+            else -> "text/plain"
+        }
+
+        contentType
     }
 }

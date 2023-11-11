@@ -1,4 +1,4 @@
-package com.wordpress.anujsaxenadev.network_manager.module
+package com.wordpress.anujsaxenadev.network_manager.di
 
 import com.wordpress.anujsaxenadev.network_manager.NetworkManager
 import com.wordpress.anujsaxenadev.network_manager.impl.OkHttpNetworkManager
@@ -11,12 +11,8 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+internal object NetworkModule {
     @Provides
     @Singleton
     internal fun providesNetworkManager(okHttpClient: OkHttpClient): NetworkManager = OkHttpNetworkManager(okHttpClient)
-
-    @Provides
-    @Singleton
-    internal fun providesOkHttpClient(): OkHttpClient = OkHttpClient.Builder().build()
 }

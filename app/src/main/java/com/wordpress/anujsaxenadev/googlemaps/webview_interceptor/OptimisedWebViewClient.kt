@@ -5,10 +5,12 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.wordpress.anujsaxenadev.googlemaps.core.extensions.getContentType
 import com.wordpress.anujsaxenadev.googlemaps.core.extensions.getUniqueIdentifier
 import com.wordpress.anujsaxenadev.googlemaps.core.extensions.shouldOmitRequest
 import com.wordpress.anujsaxenadev.googlemaps.features.map.repository.MapRepository
 import com.wordpress.anujsaxenadev.network_manager.NetworkManager
+import com.wordpress.anujsaxenadev.network_manager.model.NetworkRequest
 import com.wordpress.anujsaxenadev.resource_manager.ResourceManager
 import kotlinx.coroutines.runBlocking
 
@@ -68,7 +70,8 @@ class OptimisedWebViewClient(
                             super.shouldInterceptRequest(view, request)
                         }
                         else{
-                            val response = networkManager.processRequest(request).fold({
+                            val response = networkManager.processRequest(
+                                NetworkRequest(request.url.toString(), request.method, HashMap(request.requestHeaders), request.getContentType())).fold({
                                 it
                             },{
                                 logException(it)
