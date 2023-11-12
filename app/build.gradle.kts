@@ -1,3 +1,5 @@
+import extensions.addModuleImplementation
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -10,6 +12,9 @@ android {
     compileSdk = 34
     buildFeatures {
         dataBinding = true
+    }
+    packaging {
+        resources.excludes.add("META-INF/*.md")
     }
     defaultConfig {
         applicationId = "com.wordpress.anujsaxenadev.googlemaps"
@@ -48,9 +53,9 @@ dependencies {
     hilt()
     dataBinding()
 
-
-    implementation(project(":network_manager"))
-    implementation(project(":database_manager"))
-    implementation(project(":analytics"))
-    implementation(project(":common"))
+    resourceManager()
+    networkManager()
+    databaseManager()
+    analytics()
+    common()
 }

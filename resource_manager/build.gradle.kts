@@ -35,5 +35,5 @@ android {
 
 dependencies {
     hilt()
-    implementation(project(":common"))
+    common()
 }

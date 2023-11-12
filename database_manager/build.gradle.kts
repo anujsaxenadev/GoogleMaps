@@ -37,5 +37,5 @@ android {
 dependencies {
     room()
     hilt()
-    implementation(project(":common"))
+    common()
 }

@@ -39,5 +39,5 @@ android {
 dependencies {
     okhttp()
     hilt()
-    implementation(project(":common"))
+    common()
 }

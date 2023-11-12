@@ -1,8 +1,8 @@
+import extensions.addModuleImplementation
 import extensions.annotationProcessor
-import extensions.implementation
+import extensions.dependencyImplementation
 import extensions.ksp
 import org.gradle.api.artifacts.dsl.DependencyHandler
-import org.gradle.kotlin.dsl.project
 
 object Dependencies {
     const val coreKotlin = "androidx.core:core-ktx:${Versions.coreKotlin}"
@@ -22,42 +22,62 @@ object Dependencies {
 }
 
 fun DependencyHandler.room(){
-    implementation(Dependencies.roomRuntime)
+    dependencyImplementation(Dependencies.roomRuntime)
     annotationProcessor(Dependencies.roomAnnotationProcessor)
     ksp(Dependencies.roomCompiler)
-    implementation(Dependencies.roomKotlinExtension)
+    dependencyImplementation(Dependencies.roomKotlinExtension)
 }
 
 fun DependencyHandler.hilt(){
-    implementation(Dependencies.hiltAndroid)
+    dependencyImplementation(Dependencies.hiltAndroid)
     ksp(Dependencies.hiltCompiler)
 }
 
 fun DependencyHandler.okhttp(){
-    implementation(Dependencies.okhttp)
+    dependencyImplementation(Dependencies.okhttp)
 }
 
 fun DependencyHandler.coroutine(){
-    implementation(Dependencies.coroutineCore)
+    dependencyImplementation(Dependencies.coroutineCore)
 }
 
 fun DependencyHandler.kotlinViewExtensions(){
-    implementation(Dependencies.activityKotlinExtension)
-    implementation(Dependencies.fragmentKotlinExtension)
+    dependencyImplementation(Dependencies.activityKotlinExtension)
+    dependencyImplementation(Dependencies.fragmentKotlinExtension)
 }
 
 fun DependencyHandler.material(){
-    implementation(Dependencies.material)
+    dependencyImplementation(Dependencies.material)
 }
 
 fun DependencyHandler.appCompat(){
-    implementation(Dependencies.appCompat)
+    dependencyImplementation(Dependencies.appCompat)
 }
 
 fun DependencyHandler.coreKotlin(){
-    implementation(Dependencies.coreKotlin)
+    dependencyImplementation(Dependencies.coreKotlin)
 }
 
 fun DependencyHandler.dataBinding(){
-    implementation(Dependencies.dataBinding)
+    dependencyImplementation(Dependencies.dataBinding)
+}
+
+fun DependencyHandler.resourceManager(){
+    addModuleImplementation(":resource_manager")
+}
+
+fun DependencyHandler.networkManager(){
+    addModuleImplementation(":network_manager")
+}
+
+fun DependencyHandler.databaseManager(){
+    addModuleImplementation(":database_manager")
+}
+
+fun DependencyHandler.analytics(){
+    addModuleImplementation(":analytics")
+}
+
+fun DependencyHandler.common(){
+    addModuleImplementation(":common")
 }
