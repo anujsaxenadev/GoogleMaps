@@ -40,14 +40,16 @@ To make sure same resource is not fetched multiple times:
 - Saving the Mapping of saved resources in Room DB.
 
 ### 3. MultiModule Architecture
-To make sure the scalablity of the application, multiple modules are created.:
+To make sure the scalablity of the application, multiple modules are created:
+- Every seperate functionality has been kept in seperate module.
+- A Custom Gradle plugin is applied to Application and library to make modules dependency handling easier.
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Roadmap
 Our future plans include:
-- Adding Cache Crearing Stratergy to make sure cache have some validity.
+- Adding Cache Clearing Stratergy to make sure cache have some validity.
 - Encrypting the Resources before storing to cacheDir.
 - Using NDK to store the Google Maps API Key.
 - Using Jetpack Compose Instead of XML Layouts.
