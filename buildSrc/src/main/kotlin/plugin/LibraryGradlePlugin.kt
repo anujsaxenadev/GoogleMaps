@@ -1,6 +1,5 @@
 package plugin
 
-import Versions
 import com.android.build.gradle.LibraryExtension
 import constants.PluginIds
 import constants.ProjectConfig
@@ -20,8 +19,9 @@ class LibraryGradlePlugin : Plugin<Project> {
 
     private fun applyPlugins(project: Project){
         project.apply{
-            plugin(PluginIds.hilt)
+//            plugin(PluginIds.hilt)
             plugin(PluginIds.ksp)
+            plugin(PluginIds.kotlin_android)
         }
     }
 
