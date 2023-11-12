@@ -1,3 +1,5 @@
+import org.gradle.api.JavaVersion
+
 object Versions {
     const val coreKotlin = "1.12.0"
     const val appCompat = "1.6.1"
@@ -10,4 +12,5 @@ object Versions {
     const val room = "2.6.0"
     const val coroutineCore = "1.7.3"
     const val ksp = "1.9.0-1.0.13"
+    val javaVersion = JavaVersion.VERSION_17
 }
