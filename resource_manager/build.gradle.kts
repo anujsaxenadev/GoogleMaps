@@ -1,6 +1,5 @@
 plugins {
     `android-library`
-    id("com.google.devtools.ksp") version "1.9.0-1.0.13"
 }
 
 apply<plugin.LibraryGradlePlugin>()
@@ -10,6 +9,9 @@ android {
 }
 
 dependencies {
+    // DI
     hilt()
+
+    // Utils
     common()
 }

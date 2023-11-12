@@ -19,7 +19,6 @@ class LibraryGradlePlugin : Plugin<Project> {
 
     private fun applyPlugins(project: Project){
         project.apply{
-//            plugin(PluginIds.hilt)
             plugin(PluginIds.ksp)
             plugin(PluginIds.kotlin_android)
         }
