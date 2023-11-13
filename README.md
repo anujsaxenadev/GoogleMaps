@@ -49,9 +49,9 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Roadmap
 Our future plans include:
-- Adding Cache Clearing Stratergy to make sure cache have some validity.
-- Encrypting the Resources before storing to cacheDir.
+- Adding Cache Clearing Stratergy to make sure cache have some validity using Work Manager
+- Encrypting the Resources before storing to cacheDir. (ChaCha20)
 - Using NDK to store the Google Maps API Key.
-- Using Jetpack Compose Instead of XML Layouts.
+- Using Jetpack Compose Instead of XML Layouts. (Blocker - Stream Not able to close)
 - Using Some other Libraries like Coil for caching images.
 - To check Another approach of Intercepting API Calls in Android Webiew (Through Javascript)
