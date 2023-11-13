@@ -55,3 +55,4 @@ Our future plans include:
 - Using Jetpack Compose Instead of XML Layouts. (Blocker - Stream Not able to close)
 - Using Some other Libraries like Coil for caching images.
 - To check Another approach of Intercepting API Calls in Android Webiew (Through Javascript)
+- Writing testing cases for all modules
