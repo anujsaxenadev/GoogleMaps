@@ -1,6 +1,5 @@
 package com.wordpress.anujsaxenadev.googlemaps.features.map.view
 
-import android.util.Log
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -9,8 +8,8 @@ import com.wordpress.anujsaxenadev.googlemaps.features.map.view_model.MapViewMod
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.consume
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -23,21 +22,24 @@ class WebViewInterceptor(
         view: WebView?,
         request: WebResourceRequest?
     ): WebResourceResponse? {
-        Log.e("anuj-log-called", request?.url.toString())
-        val result = ioScope.async{
-            Log.e("anuj-log-started", request?.url.toString())
-            delay((1..5000L).random())
-            mapViewModel.checkResourceAvailability(request).fold({
-                Log.e("anuj-log-was-cached", request?.url.toString())
-                it
-            }, {
-                Log.e("anuj-log-was-not-called", request?.url.toString())
-                super.shouldInterceptRequest(view, request)
+        val channel = Channel<WebResourceResponse?>()
+
+        // Launch a coroutine to handle the requests
+        ioScope.launch {
+            val result = mapViewModel.checkResourceAvailability(request)
+
+            result.fold({
+                channel.send(result.getOrNull())
+            },{
+                channel.send(super.shouldInterceptRequest(view, request))
             })
         }
+
+        // Receive the result from the channel
         return runBlocking {
-            Log.e("anuj-log-awaited", request?.url.toString())
-            result.await()
+            channel.consume {
+                receive()
+            }
         }
     }
 }
