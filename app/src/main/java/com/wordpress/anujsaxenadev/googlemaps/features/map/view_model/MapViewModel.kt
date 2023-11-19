@@ -30,7 +30,7 @@ class MapViewModel @Inject constructor(
     }
 
     companion object{
-        private const val CANCELLATION_TIMEOUT = 5000L
+        private const val CANCELLATION_TIMEOUT = 500L
     }
 
     fun getWebViewClient(): WebViewClient{

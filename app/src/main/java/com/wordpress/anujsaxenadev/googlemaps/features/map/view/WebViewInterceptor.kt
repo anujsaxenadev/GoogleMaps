@@ -23,9 +23,10 @@ class WebViewInterceptor(
         request: WebResourceRequest?
     ): WebResourceResponse? {
         val channel = Channel<WebResourceResponse?>()
-
         // Launch a coroutine to handle the requests
         ioScope.launch {
+//            Can try adding delay in the coroutine. You will see async calls happeing without blocking other requests.
+//            delay((0..3000L).random())
             val result = mapViewModel.checkResourceAvailability(request)
 
             result.fold({
