@@ -16,6 +16,7 @@ import com.wordpress.anujsaxenadev.network_manager.model.NetworkRequest
 import com.wordpress.anujsaxenadev.network_manager.model.NetworkResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withTimeout
 import java.io.InputStream
 import javax.inject.Inject
 
@@ -28,36 +29,42 @@ class MapViewModel @Inject constructor(
         WebViewInterceptor(this)
     }
 
+    companion object{
+        private const val CANCELLATION_TIMEOUT = 5000L
+    }
+
     fun getWebViewClient(): WebViewClient{
         return webViewInterceptor
     }
 
     suspend fun checkResourceAvailability(request: WebResourceRequest?): Result<WebResourceResponse>{
         return runCatchingWithDispatcher(Dispatchers.IO) {
-            if(request != null) {
-                val requestUniqueIdentifier = request.getUniqueIdentifier().fold({
-                    it
-                }, {
-                    logException(it)
-                    null
-                })
-                if (requestUniqueIdentifier != null) {
-                    checkResourceAvailabilityForUniqueIdentifier(
-                        requestUniqueIdentifier,
-                        request
-                    ).fold(
-                        {
-                            it
-                        },
-                        {
-                            throw it
-                        })
-                } else {
+            withTimeout(CANCELLATION_TIMEOUT){
+                if(request != null) {
+                    val requestUniqueIdentifier = request.getUniqueIdentifier().fold({
+                        it
+                    }, {
+                        logException(it)
+                        null
+                    })
+                    if (requestUniqueIdentifier != null) {
+                        checkResourceAvailabilityForUniqueIdentifier(
+                            requestUniqueIdentifier,
+                            request
+                        ).fold(
+                            {
+                                it
+                            },
+                            {
+                                throw it
+                            })
+                    } else {
+                        throw ResourceFetchingFailed()
+                    }
+                }
+                else{
                     throw ResourceFetchingFailed()
                 }
-            }
-            else{
-                throw ResourceFetchingFailed()
             }
         }
     }
