@@ -11,7 +11,9 @@ import androidx.room.PrimaryKey
 )
 internal data class MapResource(
     @ColumnInfo(name = "resource_id")
-    val resourceId: String
+    val resourceId: String,
+    @ColumnInfo(name = "created_at")
+    var createdAt: Long
 ){
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "index")

@@ -12,5 +12,7 @@ object Versions {
     const val room = "2.6.0"
     const val coroutineCore = "1.7.3"
     const val ksp = "1.9.0-1.0.13"
+    const val workManager = "2.8.1"
+    const val hiltWorkManagerExtension = "1.1.0"
     val javaVersion = JavaVersion.VERSION_17
 }

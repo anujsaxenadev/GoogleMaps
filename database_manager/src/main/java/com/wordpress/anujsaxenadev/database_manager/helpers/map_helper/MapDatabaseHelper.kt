@@ -26,4 +26,22 @@ interface MapDatabaseHelper{
      * @return [Result] of name of the resource saved. [Throwable] - if there is some error happened during get call.
      */
     suspend fun storeResourceAndGetFileName(resourceId: String): Result<String>
+
+    /**
+     * Removing the Resource with `created_at` < given `timestamp`
+     *
+     * @param timestamp given timestamp.
+     *
+     * @return [Result] of Unit if success [Throwable] - if there is some error happened during removing items.
+     */
+    suspend fun removeResourceBefore(timestamp: Long): Result<Unit>
+
+    /**
+     * Get all the resource before `timestamp`
+     *
+     * @param timestamp given timestamp.
+     *
+     * @return [Result] of Unit if success [Throwable] - if there is some error happened during getting list.
+     */
+    suspend fun getResourcesBefore(timestamp: Long): Result<List<String>>
 }

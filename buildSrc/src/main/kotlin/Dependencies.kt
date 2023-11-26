@@ -19,6 +19,8 @@ object Dependencies {
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
     const val roomKotlinExtension = "androidx.room:room-ktx:${Versions.room}"
     const val coroutineCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutineCore}"
+    const val workManager = "androidx.work:work-runtime-ktx:${Versions.workManager}"
+    const val hiltWorkManagerExtension = "androidx.hilt:hilt-work:${Versions.hiltWorkManagerExtension}"
 }
 
 fun DependencyHandler.room(){
@@ -80,4 +82,9 @@ fun DependencyHandler.analytics(){
 
 fun DependencyHandler.common(){
     addModuleImplementation(":common")
+}
+
+fun DependencyHandler.workManager(){
+    dependencyImplementation(Dependencies.workManager)
+    dependencyImplementation(Dependencies.hiltWorkManagerExtension)
 }

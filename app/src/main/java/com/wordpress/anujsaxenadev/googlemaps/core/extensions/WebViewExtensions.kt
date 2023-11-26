@@ -10,7 +10,7 @@ fun WebSettings.applyMapSettings(){
     javaScriptEnabled = true
     javaScriptCanOpenWindowsAutomatically = true
     domStorageEnabled = true
-    cacheMode = WebSettings.LOAD_DEFAULT
+    cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
 }
 
 suspend fun WebResourceRequest.getUniqueIdentifier(): Result<String>{

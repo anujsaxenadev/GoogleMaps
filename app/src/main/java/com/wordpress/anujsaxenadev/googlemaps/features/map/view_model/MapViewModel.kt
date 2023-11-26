@@ -3,6 +3,7 @@ package com.wordpress.anujsaxenadev.googlemaps.features.map.view_model
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebViewClient
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import com.wordpress.anujsaxenadev.analytics.AnalyticsManager
 import com.wordpress.anujsaxenadev.common.extensions.lazySync
@@ -10,12 +11,16 @@ import com.wordpress.anujsaxenadev.common.extensions.runCatchingWithDispatcher
 import com.wordpress.anujsaxenadev.googlemaps.core.extensions.getContentType
 import com.wordpress.anujsaxenadev.googlemaps.core.extensions.getUniqueIdentifier
 import com.wordpress.anujsaxenadev.googlemaps.core.extensions.shouldOmitRequest
+import com.wordpress.anujsaxenadev.googlemaps.features.map.states.MapState
 import com.wordpress.anujsaxenadev.googlemaps.features.map.repository.MapRepository
 import com.wordpress.anujsaxenadev.googlemaps.features.map.webview_interceptor.WebViewInterceptor
+import com.wordpress.anujsaxenadev.googlemaps.features.map.webview_interceptor.cache_clearing_statergy.CacheClearingStrategyWorker
 import com.wordpress.anujsaxenadev.network_manager.model.NetworkRequest
 import com.wordpress.anujsaxenadev.network_manager.model.NetworkResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withTimeout
 import java.io.InputStream
 import javax.inject.Inject
@@ -23,8 +28,12 @@ import javax.inject.Inject
 @HiltViewModel
 class MapViewModel @Inject constructor(
     private val mapRepository: MapRepository,
-    private val analyticsManager: AnalyticsManager
+    private val analyticsManager: AnalyticsManager,
+    private val cacheClearingStrategyWorker: CacheClearingStrategyWorker
 ): ViewModel() {
+    private val _cacheClearingState = MutableStateFlow<MapState>(MapState.Loading)
+    val cacheClearingState = _cacheClearingState.asStateFlow()
+
     private val webViewInterceptor by lazySync {
         WebViewInterceptor(this)
     }
@@ -35,6 +44,12 @@ class MapViewModel @Inject constructor(
 
     fun getWebViewClient(): WebViewClient{
         return webViewInterceptor
+    }
+
+    fun clearCache(lifecycleOwner: LifecycleOwner){
+        cacheClearingStrategyWorker.clearCache(lifecycleOwner){
+            _cacheClearingState.value = MapState.CacheCleared
+        }
     }
 
     suspend fun checkResourceAvailability(request: WebResourceRequest?): Result<WebResourceResponse>{

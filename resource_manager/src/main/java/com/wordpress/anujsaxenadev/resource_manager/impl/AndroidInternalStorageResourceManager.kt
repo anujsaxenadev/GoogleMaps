@@ -77,4 +77,21 @@ internal class AndroidInternalStorageResourceManager @Inject constructor(
             })
         }
     }
+
+    override suspend fun removeResource(resourceName: ResourceName): Result<Unit>{
+        return runCatchingWithDispatcher(Dispatchers.IO){
+            getInternalFileInstance(resourceName).fold({
+                if(it.exists()){
+                    it.delete()
+                }
+                else{
+                    throw ResourceNotFound("Resource Not Found for File : $resourceName")
+                }
+            }, {
+                throw it
+            })
+        }
+    }
+
+    private inner class ResourceNotFound(override val message: String?): Throwable()
 }
