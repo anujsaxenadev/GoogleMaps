@@ -11,7 +11,7 @@ import com.wordpress.anujsaxenadev.googlemaps.core.extensions.getContentType
 import com.wordpress.anujsaxenadev.googlemaps.core.extensions.getUniqueIdentifier
 import com.wordpress.anujsaxenadev.googlemaps.core.extensions.shouldOmitRequest
 import com.wordpress.anujsaxenadev.googlemaps.features.map.repository.MapRepository
-import com.wordpress.anujsaxenadev.googlemaps.features.map.view.WebViewInterceptor
+import com.wordpress.anujsaxenadev.googlemaps.features.map.webview_interceptor.WebViewInterceptor
 import com.wordpress.anujsaxenadev.network_manager.model.NetworkRequest
 import com.wordpress.anujsaxenadev.network_manager.model.NetworkResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -121,16 +121,12 @@ class MapViewModel @Inject constructor(
             if (shouldOmitRequest) {
                 throw ResourceFetchingFailed()
             } else {
-                fetchDataFromNetworkAndSaveIt(request, requestUniqueIdentifier).fold({
-                    it
-                }, {
-                    throw it
-                })
+                throw NetworkFetchingRequired(requestUniqueIdentifier)
             }
         }
     }
 
-    private suspend fun fetchDataFromNetworkAndSaveIt(request: WebResourceRequest, requestUniqueIdentifier: String): Result<WebResourceResponse>{
+    suspend fun fetchDataFromNetworkAndSaveIt(request: WebResourceRequest, requestUniqueIdentifier: String): Result<WebResourceResponse>{
         return runCatchingWithDispatcher(Dispatchers.IO){
             val response = mapRepository.processRequest(
                 NetworkRequest(
@@ -199,4 +195,5 @@ class MapViewModel @Inject constructor(
     }
 
     private inner class ResourceFetchingFailed: Exception()
+    inner class NetworkFetchingRequired(val requestIdentifier: String): Exception()
 }
