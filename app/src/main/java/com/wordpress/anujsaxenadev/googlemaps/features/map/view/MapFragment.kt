@@ -1,14 +1,18 @@
 package com.wordpress.anujsaxenadev.googlemaps.features.map.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.wordpress.anujsaxenadev.googlemaps.core.ApplicationConstants
 import com.wordpress.anujsaxenadev.googlemaps.core.extensions.applyMapSettings
+import com.wordpress.anujsaxenadev.googlemaps.core.extensions.launchWhenStarted
 import com.wordpress.anujsaxenadev.googlemaps.databinding.FragmentMapBinding
+import com.wordpress.anujsaxenadev.googlemaps.features.map.states.MapState
 import com.wordpress.anujsaxenadev.googlemaps.features.map.view_model.MapViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,7 +33,23 @@ class MapFragment: Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        inflateMap()
+        mapViewModel.clearCache(this)
+        setObservers()
+    }
+
+    private fun setObservers() {
+        launchWhenStarted(lifecycleScope){
+            mapViewModel.cacheClearingState.collect{
+                when(it){
+                    MapState.CacheCleared -> {
+                        inflateMap()
+                    }
+                    MapState.Loading -> {
+                        Log.e("anuj-log", "loading")
+                    }
+                }
+            }
+        }
     }
 
     private fun inflateMap(){
@@ -39,6 +59,4 @@ class MapFragment: Fragment(){
             loadUrl(ApplicationConstants.MAP_RESOURCES_REFERENCE)
         }
     }
-
 }
-

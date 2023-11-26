@@ -17,4 +17,12 @@ internal interface MapResourceDao{
             WHERE resource_id = :resourceId
         """)
     suspend fun getResourceByResourceId(resourceId: String): MapResource?
+
+
+    @Query(
+        value = """
+            DELETE FROM MAP_RESOURCES
+            WHERE created_at < :timestamp OR created_at == 0
+        """)
+    suspend fun removeResourcesBefore(timestamp: Long)
 }

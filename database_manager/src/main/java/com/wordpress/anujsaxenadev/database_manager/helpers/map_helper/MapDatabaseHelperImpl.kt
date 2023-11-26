@@ -39,7 +39,7 @@ internal class MapDatabaseHelperImpl @Inject constructor(private val database: M
 
     override suspend fun storeResourceAndGetFileName(resourceId: String): Result<String> {
         return runCatchingWithDispatcher(Dispatchers.IO){
-            insertResource(MapResource(resourceId)).fold({
+            insertResource(MapResource(resourceId, System.currentTimeMillis())).fold({
                 getResourceByResourceId(resourceId).fold({
                     it.getResourceName()
                 }, {
@@ -48,6 +48,12 @@ internal class MapDatabaseHelperImpl @Inject constructor(private val database: M
             }, {
                 throw it
             })
+        }
+    }
+
+    override suspend fun removeResourceBefore(timestamp: Long): Result<Unit> {
+        return runCatchingWithDispatcher(Dispatchers.IO){
+            database.mapResourcesDao().removeResourcesBefore(timestamp)
         }
     }
 
