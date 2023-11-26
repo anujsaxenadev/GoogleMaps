@@ -190,7 +190,7 @@ class MapViewModel @Inject constructor(
         )
     }
 
-    private fun logException(throwable: Throwable){
+    fun logException(throwable: Throwable){
         analyticsManager.log(throwable)
     }
 

@@ -29,6 +29,10 @@ class WebViewInterceptor(
                         ): Result<WebResourceResponse> {
                             return mapViewModel.fetchDataFromNetworkAndSaveIt(request, requestIdentifier)
                         }
+
+                        override fun logException(e: Throwable) {
+                            return mapViewModel.logException(e)
+                        }
                     })
                 }
                 else{

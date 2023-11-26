@@ -9,7 +9,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import java.io.InputStream
 
-class WebResourceResponseWrapper(
+internal class WebResourceResponseWrapper(
     private val request: WebResourceRequest,
     private val requestIdentifier: String,
     private val streamInterruptionListener: StreamInterruptionListener
