@@ -4,6 +4,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import com.wordpress.anujsaxenadev.googlemaps.core.extensions.getContentEncoding
 import com.wordpress.anujsaxenadev.googlemaps.core.extensions.getContentType
+import com.wordpress.anujsaxenadev.googlemaps.core.extensions.getMimeType
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import java.io.InputStream
@@ -19,12 +20,12 @@ class WebResourceResponseWrapper(
         null
     ) {
 
-    private var inputStream: InputStream? = null
+    private var webResponse: WebResourceResponse? = null
     private var fetchingJob = ioScope.async {
         try {
             val response = streamInterruptionListener.callNetworkAndGetData(request, requestIdentifier).getOrNull()
             if(response != null){
-                inputStream = response.data
+                webResponse = response
             }
         }
         catch (e: Throwable){
@@ -41,7 +42,35 @@ class WebResourceResponseWrapper(
             runBlocking {
                 fetchingJob.await()
             }
-            return inputStream?.read() ?: 0
+            return webResponse?.data?.read() ?: 0
+        }
+    }
+
+    // Overriding Other functions
+    override fun getStatusCode(): Int {
+        return if(webResponse == null){
+            super.getStatusCode()
+        }
+        else{
+            webResponse!!.statusCode
+        }
+    }
+
+    override fun getMimeType(): String {
+        return if(webResponse == null){
+            request.getMimeType() ?: ""
+        }
+        else{
+            webResponse!!.mimeType
+        }
+    }
+
+    override fun getEncoding(): String {
+        return if(webResponse == null){
+            request.getContentEncoding() ?: ""
+        }
+        else{
+            webResponse!!.encoding
         }
     }
 }
