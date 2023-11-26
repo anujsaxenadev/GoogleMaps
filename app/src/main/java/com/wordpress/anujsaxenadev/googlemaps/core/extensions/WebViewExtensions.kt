@@ -1,5 +1,6 @@
 package com.wordpress.anujsaxenadev.googlemaps.core.extensions
 
+import android.webkit.MimeTypeMap
 import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import com.wordpress.anujsaxenadev.common.extensions.runCatchingWithDispatcher
@@ -64,5 +65,30 @@ fun WebResourceRequest.getContentType(): String {
         }
 
         contentType
+    }
+}
+
+fun WebResourceRequest.getMimeType(): String? {
+    return try {
+        val extension = MimeTypeMap.getFileExtensionFromUrl(url.toString())
+        if (extension != null) {
+            val mime = MimeTypeMap.getSingleton()
+            mime.getMimeTypeFromExtension(extension)
+        }
+        else{
+            null
+        }
+    }
+    catch (e: Throwable){
+        null
+    }
+}
+
+fun WebResourceRequest.getContentEncoding(): String?{
+    return try {
+        requestHeaders["content-encoding"]
+    }
+    catch (e: Throwable){
+        null
     }
 }
