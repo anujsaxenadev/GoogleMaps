@@ -5,4 +5,5 @@ import android.webkit.WebResourceResponse
 
 interface StreamInterruptionListener{
     suspend fun callNetworkAndGetData(request: WebResourceRequest, requestIdentifier: String): Result<WebResourceResponse>
+    fun logException(e: Throwable)
 }
