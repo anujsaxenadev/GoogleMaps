@@ -35,4 +35,13 @@ interface MapDatabaseHelper{
      * @return [Result] of Unit if success [Throwable] - if there is some error happened during removing items.
      */
     suspend fun removeResourceBefore(timestamp: Long): Result<Unit>
+
+    /**
+     * Get all the resource before `timestamp`
+     *
+     * @param timestamp given timestamp.
+     *
+     * @return [Result] of Unit if success [Throwable] - if there is some error happened during getting list.
+     */
+    suspend fun getResourcesBefore(timestamp: Long): Result<List<String>>
 }

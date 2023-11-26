@@ -7,6 +7,7 @@ import androidx.work.WorkManager
 import com.wordpress.anujsaxenadev.analytics.AnalyticsManager
 import com.wordpress.anujsaxenadev.database_manager.helpers.map_helper.MapDatabaseHelper
 import com.wordpress.anujsaxenadev.googlemaps.core.worker.WorkManagerFactory
+import com.wordpress.anujsaxenadev.resource_manager.ResourceManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,9 +31,10 @@ class WorkerModule {
     @Singleton
     fun providesWorkManagerFactory(
         mapDatabaseHelper: MapDatabaseHelper,
+        resourceManager: ResourceManager,
         analyticsManager: AnalyticsManager
     ): WorkManagerFactory {
-        return WorkManagerFactory(mapDatabaseHelper, analyticsManager)
+        return WorkManagerFactory(mapDatabaseHelper, resourceManager, analyticsManager)
     }
 
     @Provides

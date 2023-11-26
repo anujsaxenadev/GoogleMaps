@@ -7,9 +7,11 @@ import androidx.work.WorkerParameters
 import com.wordpress.anujsaxenadev.analytics.AnalyticsManager
 import com.wordpress.anujsaxenadev.database_manager.helpers.map_helper.MapDatabaseHelper
 import com.wordpress.anujsaxenadev.googlemaps.features.map.webview_interceptor.cache_clearing_statergy.impl.TimeCacheClearingStrategyWorker
+import com.wordpress.anujsaxenadev.resource_manager.ResourceManager
 
 class WorkManagerFactory(
     private val mapDatabaseHelper: MapDatabaseHelper,
+    private val resourceManager: ResourceManager,
     private val analyticsManager: AnalyticsManager
 ) : WorkerFactory() {
     override fun createWorker(
@@ -20,7 +22,13 @@ class WorkManagerFactory(
         return try {
             when(workerClassName) {
                 TimeCacheClearingStrategyWorker::class.java.name ->
-                    TimeCacheClearingStrategyWorker(appContext, workerParameters, mapDatabaseHelper)
+                    TimeCacheClearingStrategyWorker(
+                        appContext,
+                        workerParameters,
+                        mapDatabaseHelper,
+                        resourceManager,
+                        analyticsManager
+                    )
                 else ->{
                     analyticsManager.log(WorkerNotFoundException("Worker Not Found : $workerClassName"))
                     null

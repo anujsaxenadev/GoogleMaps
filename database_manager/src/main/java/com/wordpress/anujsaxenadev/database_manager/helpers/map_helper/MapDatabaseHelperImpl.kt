@@ -57,4 +57,15 @@ internal class MapDatabaseHelperImpl @Inject constructor(private val database: M
         }
     }
 
+    override suspend fun getResourcesBefore(timestamp: Long): Result<List<String>> {
+        return runCatchingWithDispatcher(Dispatchers.IO){
+            val resultList = ArrayList<String>()
+            val result = database.mapResourcesDao().getResourcesBefore(timestamp)
+            for(entries in result){
+                resultList.add(entries.getResourceName())
+            }
+            resultList
+        }
+    }
+
 }

@@ -19,4 +19,11 @@ interface ResourceManager {
      * @return [Result] of [InputStream] - stream reference to the resource or [Throwable] if there is some error happened. like - resource does not exist
      */
     suspend fun getResourceReference(resourceName: ResourceName): Result<InputStream>
+
+    /**
+     * @param resourceName - Name of the Resource to delete
+     *
+     * @return [Result] of [Unit] - if able to delete file or [Throwable] if there is some error happened. like - resource does not exist
+     */
+    suspend fun removeResource(resourceName: ResourceName): Result<Unit>
 }

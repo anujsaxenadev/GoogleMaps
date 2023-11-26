@@ -18,6 +18,12 @@ internal interface MapResourceDao{
         """)
     suspend fun getResourceByResourceId(resourceId: String): MapResource?
 
+    @Query(
+        value = """
+            SELECT * FROM MAP_RESOURCES
+            WHERE created_at < :timestamp OR created_at == 0
+        """)
+    suspend fun getResourcesBefore(timestamp: Long): List<MapResource>
 
     @Query(
         value = """
