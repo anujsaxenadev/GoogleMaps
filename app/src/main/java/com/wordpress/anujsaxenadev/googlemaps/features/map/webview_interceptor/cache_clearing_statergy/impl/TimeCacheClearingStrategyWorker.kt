@@ -9,6 +9,7 @@ import com.wordpress.anujsaxenadev.googlemaps.core.extensions.getTodayTimeStamp
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 @HiltWorker
@@ -19,6 +20,8 @@ internal class TimeCacheClearingStrategyWorker @AssistedInject constructor(
 ): CoroutineWorker(context, workerParams) {
     override suspend fun doWork(): Result {
         return withContext(Dispatchers.IO){
+            // Added default Delay for smooth Animation
+            delay(2000)
             val result = mapDatabaseHelper.removeResourceBefore(getTodayTimeStamp())
             result.fold({
                 Result.success()

@@ -35,4 +35,7 @@ dependencies {
     common()
     workManager()
 
+    implementation("com.airbnb.android:lottie:6.2.0")
+
+
 }

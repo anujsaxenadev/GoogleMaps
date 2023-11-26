@@ -1,7 +1,6 @@
 package com.wordpress.anujsaxenadev.googlemaps.features.map.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,13 +41,25 @@ class MapFragment: Fragment(){
             mapViewModel.cacheClearingState.collect{
                 when(it){
                     MapState.CacheCleared -> {
+                        toggleMapView(true)
                         inflateMap()
                     }
                     MapState.Loading -> {
-                        Log.e("anuj-log", "loading")
+                        toggleMapView(false)
                     }
                 }
             }
+        }
+    }
+
+    private fun toggleMapView(enableMap: Boolean){
+        if(enableMap){
+            fragmentMapBinding?.mapView?.visibility = View.VISIBLE
+            fragmentMapBinding?.loader?.visibility = View.GONE
+        }
+        else{
+            fragmentMapBinding?.loader?.visibility = View.VISIBLE
+            fragmentMapBinding?.mapView?.visibility = View.GONE
         }
     }
 
